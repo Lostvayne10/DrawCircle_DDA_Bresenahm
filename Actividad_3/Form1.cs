@@ -35,11 +35,16 @@ namespace Actividad_3
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
+            
+        }
+
+        private void pictureBox1_MouseClick_1(object sender, MouseEventArgs e)
+        {
             if (band)
             {
                 y1 = e.Y;
                 x1 = e.X;
-                panel1.CreateGraphics().DrawEllipse(pen1,x1,y1,1,1);
+                panel1.CreateGraphics().DrawEllipse(pen1, x1, y1, 1, 1);
                 bmp.SetPixel(x1, y1, Color.Red);
                 band = false;
             }
@@ -47,9 +52,10 @@ namespace Actividad_3
             {
                 y2 = e.Y;
                 x2 = e.X;
-                panel1.CreateGraphics().DrawEllipse(pen1, x1, y1, 1, 1);
-                DrawElipseDDA(x1, y1, SacarRadio(x1, y1, x2, y2));
+                //panel1.CreateGraphics().DrawEllipse(pen1, x1, y1, 1, 1);
+                //DrawElipseDDA(x1, y1, SacarRadio(x1, y1, x2, y2));
                 DrawElipseBresenham(x1, y1, SacarRadio(x1, y1, x2, y2));
+                pictureBox1.Image = bmp;
                 band = true;
             }
         }
@@ -64,7 +70,7 @@ namespace Actividad_3
             for(xi = 0; xi<=yi; xi++)
             {
                 yi = Math.Sqrt(Math.Abs(Math.Pow(r, 2) - Math.Pow(xi, 2)));
-                drawOctante(xi, yi, xc, yc,pen2);
+                drawOctante(xi, yi, xc, yc,Color.Blue);
             }
 
             stopwatch.Stop();
@@ -87,9 +93,9 @@ namespace Actividad_3
 
             pk = (5 / 4) - r; ///Calculo primera iteracion de PK para iniciar
 
-            drawOctante(xi, yi, xc, yc,pen3);
+            drawOctante(xi, yi, xc, yc,Color.Black);
 
-            while(yi>xi)
+            while(yi>=xi)
             {
                 if (pk < 0)
                 {
@@ -102,7 +108,7 @@ namespace Actividad_3
                     xi++;
                     yi--;
                 }
-                drawOctante(xi, yi, xc, yc, pen3);
+                drawOctante(xi, yi, xc, yc, Color.Black);
             }
 
             stopwatch.Stop();
@@ -110,16 +116,37 @@ namespace Actividad_3
             tiempobresenham.Text = String.Format("{0}", ts.TotalMilliseconds);
         }
 
-        void drawOctante(double x, double y, int xc, int yc, Pen p1)
+        void drawOctante(double x, double y, int xc, int yc, Color col)
         {
-            panel1.CreateGraphics().DrawEllipse(p1, (int)x + xc, (int)y + yc, 1, 1);
+
+            if (x + xc > 0 && x + xc < 600 && y + yc > 0 && y + yc < 450)  /// Cuadrante 2
+                bmp.SetPixel((int)x + xc, (int)y + yc, col);
+            if (-x + xc > 0 && -x + xc < 600 && -y + yc > 0 && -y + yc < 450)  ///CUADRANTE 6
+                bmp.SetPixel((int)-x + xc, (int)-y + yc, col);
+            if (-x + xc > 0 && -x + xc < 600 && y + yc > 0 && y + yc < 450)  ///Cuadrante 3
+                bmp.SetPixel((int)-x + xc, (int)y + yc, col);
+            if (x + xc > 0 && x + xc < 600 && -y + yc > 0 && -y + yc < 450)  ///Cuadrante 7
+                bmp.SetPixel((int)x + xc, (int)-y + yc, col);
+            if (y + xc > 0 && y + xc < 600 && x + yc > 0 && x + yc < 450)    ///Cuadrante 1
+                bmp.SetPixel((int)y + xc, (int)x + yc,col);
+            if (-y + xc > 0 && -y + xc < 600 && -x + yc > 0 && -x + yc < 450) ///
+                bmp.SetPixel((int)-y + xc, (int)-x + yc, col);
+            if (-y + xc > 0 && -y + xc < 800 && x + yc > 0 && x + yc < 450)  ///Cuadrante 4
+                bmp.SetPixel((int)-y + xc, (int)x + yc, col);
+            if (y + xc > 0 && y + xc < 600 && -x + yc > 0 && -x + yc < 450)  ///Cuadrante 8
+                bmp.SetPixel((int)y + xc, (int)-x + yc, col);
+          
+            
+
+
+            /*panel1.CreateGraphics().DrawEllipse(p1, (int)x + xc, (int)y + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)-x + xc, (int)-y + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)-x + xc, (int)y + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)x + xc, (int)-y + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)y + xc, (int)x + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)-y + xc, (int)-x + yc, 1, 1);
             panel1.CreateGraphics().DrawEllipse(p1, (int)-y + xc, (int)x + yc, 1, 1);
-            panel1.CreateGraphics().DrawEllipse(p1, (int)y + xc, (int)-x + yc, 1, 1);
+            panel1.CreateGraphics().DrawEllipse(p1, (int)y + xc, (int)-x + yc, 1, 1);*/
           
         }
 
