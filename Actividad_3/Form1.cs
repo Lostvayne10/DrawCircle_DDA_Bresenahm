@@ -64,7 +64,7 @@ namespace Actividad_3
             for(xi = 0; xi<=yi; xi++)
             {
                 yi = Math.Sqrt(Math.Abs(Math.Pow(r, 2) - Math.Pow(xi, 2)));
-                drawOctante(Math.Round(xi), Math.Round (yi), xc, yc,pen2);
+                drawOctante(xi, yi, xc, yc,pen2);
             }
 
             stopwatch.Stop();
@@ -79,22 +79,26 @@ namespace Actividad_3
             stopwatch.Start();
 
             double xi, yi;
-            double d;
+            double pk;
+
             xi = 0;
+
             yi = r ;
-            d = (5 / 4) - r;
+
+            pk = (5 / 4) - r; ///Calculo primera iteracion de PK para iniciar
+
             drawOctante(xi, yi, xc, yc,pen3);
 
             while(yi>xi)
             {
-                if (d < 0)
+                if (pk < 0)
                 {
-                    d += 2 * xi + 5;
+                   pk += 2 * xi + 5;   ///Calcula pk en caso de que Y se mantenga en la misma posicion
                     xi++;
                 }
                 else
                 {
-                    d += 2 * (xi - yi) + 5;
+                    pk += 2 * (xi - yi) + 5;   ///Calcula Pk en caso de que Y deba bajar de posicion
                     xi++;
                     yi--;
                 }
